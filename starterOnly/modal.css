@@ -526,3 +526,8 @@ footer {
   }
 }
 
+.error{
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fe142f;
+}

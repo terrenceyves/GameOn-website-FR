@@ -87,13 +87,13 @@ function validateLast() {
 function validateEmail() {
     //si la valeur du champ email est vide
     if(mail.value == "") {
+      error_email.innerHTML = "Vous ne pouvez pas laisser ce champ vide";
       mail.focus();
       return false;
     }
   
     //si la valeur du champ email ne match pas avec mailFormat
     else if(validateRegexMail() == false) {
-      error_email.innerHTML = "Veuillez entrer un email valide";
       mail.focus();
       return false;
     } else {
@@ -108,6 +108,7 @@ function validateBirth() {
     birth.focus();
     return false;
   } else {
+    error_birth.innerHTML = "";
     return true;
   }
 }
@@ -119,12 +120,13 @@ function validateQty() {
     qty.focus();
     return false;
   } else {
+    error_qty.innerHTML = "";
     return true;
   }
 }
 
 function validateOptions() {
-  if(locations.value == '' ) {
+  if(locations.value == "" ) {
     error_option.innerHTML = "Veuillez choisir une option";
     return false;
   } else {
@@ -146,15 +148,10 @@ function validateConditions() {
 function validate() {
 
 if (validateFirst() == true && validateLast() == true && validateEmail() == true && validateBirth() == true && validateQty() == true && validateOptions() == true && validateConditions() == true) {
-  alert("Votre demande a bien été envoyée");
+  alert("Merci ! Votre réservation a été reçue");
   return true;
 } else {
+  document.getElementsByClassName(".error").innerHTML = "";
   return false;
 }
-
-
-  // var error_last = document.querySelector(".error-last");
-  // var error_birth = document.querySelector(".error-birth");
-  // var error_option = document.querySelector(".error-option");
-  // var error_conditions = document.querySelector(".error-conditions");
 }

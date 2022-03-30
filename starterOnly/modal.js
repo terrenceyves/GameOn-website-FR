@@ -14,22 +14,27 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const closeModalBtn = document.querySelectorAll(".close");
+const formValid = document.querySelector("#btn-submit");
+const form = document.querySelector('form[name="reserve"]')
 
-var firstname = document.reserve.first;
-var lastname = document.reserve.last;
-var mail = document.reserve.email;
-var birth = document.reserve.birthdate;
-var qty = document.reserve.quantity;
-var locations = document.reserve.location;
-var generalConditions = document.reserve.checkbox1;
+// Champs du formulaire
+const firstname = document.querySelector("#first");
+const lastname = document.querySelector("#last");
+const mail = document.querySelector("#email");
+const birth = document.querySelector("#birthdate");
+const qty = document.querySelector("#quantity");
+const locations = document.querySelectorAll('.checkbox-input[name="location"]');
+const generalConditions = document.querySelector("#checkbox1");
 
-var error_first = document.getElementById("error-first");
-var error_last = document.getElementById("error-last");
-var error_email = document.getElementById("error-email");
-var error_birth = document.getElementById("error-birth");
-var error_qty = document.getElementById("error-qty");
-var error_option = document.getElementById("error-option");
-var error_conditions = document.getElementById("error-conditions");
+// Span d'erreur du formulaire
+const error_first = document.getElementById("error-first");
+const error_last = document.getElementById("error-last");
+const error_email = document.getElementById("error-email");
+const error_birth = document.getElementById("error-birth");
+const error_qty = document.getElementById("error-qty");
+const error_option = document.getElementById("error-option");
+const error_conditions = document.getElementById("error-conditions");
+const numbersQty = /[0-9]/;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -47,98 +52,107 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-// validation du mail
-function validateRegexMail() {
-  var mail = document.reserve.email;
-  var mailFormat = /^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/;
+// Envoi du formulaire
 
-  if(mail.value.match(mailFormat)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  validate();
+});
 
 
 // Validations des champs
-function validateFirst() {
-  if(firstname.value == "" || firstname.value.length < 2) {
+function validateFirst(firstname) {
+  if (firstname.value == "" || firstname.value.length < 2) {
+    error_first.style.display = 'inline';
     error_first.innerHTML = "Veuillez entrer 2 caractères ou plus";
-    firstname.focus();
+    firstname.style.border = 'solid red 2px';
     return false;
   } else {
-    error_first.innerHTML = "";
+    error_first.style.display = "none";
+    firstname.style.border = '3px solid #279e7a';
     return true;
   }
 }
 
-function validateLast() {
-  if(lastname.value == "" || lastname.value.length < 2) {
+function validateLast(lastname) {
+  if (lastname.value == "" || lastname.value.length < 2) {
+    error_last.style.display = 'inline';
     error_last.innerHTML = "Veuillez entrer 2 caractères ou plus";
-    firstname.focus();
+    lastname.style.border = 'solid red 2px';
     return false;
   } else {
-    error_last.innerHTML = "";
+    error_last.style.display = 'none';
+    lastname.style.border = '3px solid #279e7a';
     return true;
   }
 }
 
-function validateEmail() {
-    //si la valeur du champ email est vide
-    if(mail.value == "") {
-      error_email.innerHTML = "Vous ne pouvez pas laisser ce champ vide";
-      mail.focus();
-      return false;
-    }
-  
-    //si la valeur du champ email ne match pas avec mailFormat
-    else if(validateRegexMail() == false) {
-      mail.focus();
-      return false;
-    } else {
-      return true;
-    }
+function validateEmail(mail) {
+  if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/.test(mail.value)) {
+    error_email.style.display = "inline"
+    error_email.innerHTML = "Veuillez entrer une adresse mail valide";
+    mail.style.border = 'solid red 2px';
+    return false;
+  } else {
+    error_email.style.display = 'none';
+    mail.style.border = '3px solid #279e7a';
+    return true;
+  }
 }
 
-function validateBirth() {
+function validateBirth(birth) {
   //si la valeur du champ birthdate est vide
-  if(birth.value == "") {
+  if (!birth.value.match(/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/)) {
+    error_birth.style.display = "inline";
     error_birth.innerHTML = "Veuillez entrer votre date de naissance";
-    birth.focus();
+    birth.style.border = 'solid red 2px';
     return false;
   } else {
-    error_birth.innerHTML = "";
+    error_birth.style.display = 'none';
+    birth.style.border = '3px solid #279e7a';
     return true;
   }
 }
 
-function validateQty() {
+function validateQty(qty) {
   //si la valeur du champ quantity est vide
-  if(qty.value == "") {
+  if (!qty.value.match(numbersQty)) {
+    error_qty.style.display = "inline";
     error_qty.innerHTML = "Veuillez entrer le nombre de tournois auquels vous avez participé";
-    qty.focus();
+    qty.style.border = 'solid red 2px';
     return false;
   } else {
-    error_qty.innerHTML = "";
+    error_qty.style.display = 'none';
+    qty.style.border = '3px solid #279e7a';
     return true;
   }
 }
 
-function validateOptions() {
-  if(locations.value == "" ) {
+function validateOptions(locations) {
+  let locChecked = 0;
+  locations.forEach(i => {
+    if (i.checked) {
+      locChecked++;
+    }
+  })
+
+  if (locChecked === 0) {
+    error_option.style.display = "inline";
     error_option.innerHTML = "Veuillez choisir une option";
     return false;
   } else {
+    error_option.style.display = "none";
     return true;
   }
 }
 
-function validateConditions() {
-  if(!generalConditions.checked) {
+function validateConditions(generalConditions) {
+  if (!generalConditions.checked) {
+    error_conditions.style.display = "inline";
     error_conditions.innerHTML = "Vous devez vérifier que vous acceptez les termes et conditions";
     return false;
   } else {
+    error_conditions.style.display = "none";
     return true;
   }
 }
@@ -146,12 +160,18 @@ function validateConditions() {
 
 // fonction valider
 function validate() {
-
-if (validateFirst() == true && validateLast() == true && validateEmail() == true && validateBirth() == true && validateQty() == true && validateOptions() == true && validateConditions() == true) {
-  alert("Merci ! Votre réservation a été reçue");
-  return true;
-} else {
-  document.getElementsByClassName(".error").innerHTML = "";
-  return false;
-}
-}
+  // ne pas oublier de déclarer une variable
+    let isFormValidate = [];
+  
+    isFormValidate.push(validateFirst(firstname));
+    isFormValidate.push(validateLast(lastname));
+    isFormValidate.push(validateEmail(mail));
+    isFormValidate.push(validateBirth(birth));
+    isFormValidate.push(validateQty(qty));
+    isFormValidate.push(validateOptions(locations));
+    isFormValidate.push(validateConditions(generalConditions));
+  
+    if (!isFormValidate.includes(false)) {
+        alert("Merci ! Votre réservation a été reçue.")
+    }
+  }

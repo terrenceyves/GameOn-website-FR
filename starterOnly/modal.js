@@ -144,13 +144,14 @@ function validateBirth(birth) {
     }
 }
 
-function validateQty(qty) {
-    console.log(parseInt(qty.value));
+function validateQtyParse(qty) {
+    const parsed = parseInt(qty.value);
+    console.log(parsed);
     //si la valeur du champ quantity est vide
-    if (!qty.value.match(numbersQty)) {
+    if (isNaN(parsed) || qty.value == "") {
         formDataQty.setAttribute(
             "data-error",
-            "Veuillez entrer le nombre de tournois auxquels vous avez déjà participé"
+            "Veuillez entrer le nombre de tournois auxquels vous avez participé (sous forme de nombre)"
         );
         formDataQty.setAttribute("data-error-visible", "true");
         return false;
@@ -208,7 +209,7 @@ function validate() {
     isFormValidate.push(validateEmail(mail));
     isFormValidate.push(validateBirth(birth));
     isFormValidate.push(validateBirth16(birth));
-    isFormValidate.push(validateQty(qty));
+    isFormValidate.push(validateQtyParse(qty));
     isFormValidate.push(validateOptions(locations));
     isFormValidate.push(validateConditions(generalConditions));
 

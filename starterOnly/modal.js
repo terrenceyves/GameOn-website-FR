@@ -104,6 +104,26 @@ function validateEmail(mail) {
     }
 }
 
+function validateBirth16(birth) {
+    const todayDate = new Date();
+    todayDate.setFullYear(todayDate.getFullYear() - 16);
+
+    const birthDateEntry = new Date(birth.value);
+
+    if (todayDate < birthDateEntry) {
+        formDataBirth.setAttribute(
+            "data-error",
+            "Vous devez avoir plus de 16 ans pour participer"
+        );
+        formDataBirth.setAttribute("data-error-visible", "true");
+        return false;
+    } else {
+        formDataBirth.removeAttribute("data-error");
+        formDataBirth.removeAttribute("data-error-visible");
+        return true;
+    }
+}
+
 function validateBirth(birth) {
     //si la valeur du champ birthdate est vide
     if (
@@ -187,6 +207,7 @@ function validate() {
     isFormValidate.push(validateLast(lastname));
     isFormValidate.push(validateEmail(mail));
     isFormValidate.push(validateBirth(birth));
+    isFormValidate.push(validateBirth16(birth));
     isFormValidate.push(validateQty(qty));
     isFormValidate.push(validateOptions(locations));
     isFormValidate.push(validateConditions(generalConditions));

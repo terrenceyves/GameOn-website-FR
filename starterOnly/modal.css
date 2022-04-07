@@ -533,3 +533,29 @@ footer {
     font-size: 1rem;
     color: #fe142f;
 }
+
+#confirm-modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px 8%;
+    margin: 15px auto;
+    height: 38rem;
+    font-size: 2rem;
+}
+
+#confirm-msg {
+    width: 20rem;
+    text-align: center;
+}
+
+#btn-closed {
+    background: #fe142f;
+    cursor: pointer;
+    border: #fe142f;
+    color: white;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    padding: 0.5rem 2.2rem;
+}

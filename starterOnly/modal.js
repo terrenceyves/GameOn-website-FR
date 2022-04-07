@@ -14,6 +14,7 @@ const formData = document.querySelectorAll(".formData");
 const closeModalBtn = document.querySelectorAll(".close");
 const formValid = document.querySelector("#btn-submit");
 const form = document.querySelector('form[name="reserve"]');
+const confirmationCloseBtn = document.querySelector("#btn-closed");
 
 // Champs du formulaire
 const firstname = document.querySelector("#first");
@@ -38,17 +39,23 @@ const numbersQty = /[0-9]/;
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // close modal event
-closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
+closeModalBtn[0].addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
     modalbg.style.display = "block";
+    confirmationValidation.style.display = "none";
 }
 
 // close modal form
 function closeModal() {
     modalbg.style.display = "none";
+    form.style.display = "block";
+    confirmationValidation.style.display = "none";
 }
+
+// Modal de confirmation
+const confirmationValidation = document.querySelector("#confirm-modal");
 
 // Envoi du formulaire
 
@@ -214,6 +221,10 @@ function validate() {
     isFormValidate.push(validateConditions(generalConditions));
 
     if (!isFormValidate.includes(false)) {
-        alert("Merci ! Votre réservation a été reçue.");
+        form.style.display = "none";
+        confirmationValidation.style.display = "flex";
     }
+
+    // fermer le message de validation
+    document.querySelector("#btn-closed").addEventListener("click", closeModal);
 }

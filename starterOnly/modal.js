@@ -117,30 +117,15 @@ function validateBirth16(birth) {
 
     const birthDateEntry = new Date(birth.value);
 
-    if (todayDate < birthDateEntry) {
-        formDataBirth.setAttribute(
-            "data-error",
-            "Vous devez avoir plus de 16 ans pour participer"
-        );
-        formDataBirth.setAttribute("data-error-visible", "true");
-        return false;
-    } else {
-        formDataBirth.removeAttribute("data-error");
-        formDataBirth.removeAttribute("data-error-visible");
-        return true;
-    }
-}
-
-function validateBirth(birth) {
-    //si la valeur du champ birthdate est vide
     if (
+        todayDate < birthDateEntry ||
         !birth.value.match(
             /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
         )
     ) {
         formDataBirth.setAttribute(
             "data-error",
-            "Vous devez entrer votre date de naissance"
+            "Vous devez entrer votre date de naissance et avoir plus de 16 ans pour participer"
         );
         formDataBirth.setAttribute("data-error-visible", "true");
         return false;
@@ -214,7 +199,6 @@ function validate() {
     isFormValidate.push(validateFirst(firstname));
     isFormValidate.push(validateLast(lastname));
     isFormValidate.push(validateEmail(mail));
-    isFormValidate.push(validateBirth(birth));
     isFormValidate.push(validateBirth16(birth));
     isFormValidate.push(validateQtyParse(qty));
     isFormValidate.push(validateOptions(locations));

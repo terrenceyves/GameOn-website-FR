@@ -212,13 +212,13 @@ input {
 }
 .formData[data-error]::after {
     content: attr(data-error);
-    font-size: 0.4em;
+    font-size: 0.7rem;
     color: #e54858;
     display: block;
     margin-top: 7px;
     margin-bottom: 7px;
-    text-align: right;
-    line-height: 0.3;
+    text-align: left;
+    line-height: 1.2;
     opacity: 0;
     transition: 0.3s;
 }
@@ -555,7 +555,7 @@ footer {
     cursor: pointer;
     border: #fe142f;
     color: white;
-    border-radius: 1rem;
+    border-radius: 0.8rem;
     font-size: 1.5rem;
     padding: 0.5rem 2.2rem;
 }

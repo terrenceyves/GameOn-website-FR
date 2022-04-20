@@ -119,6 +119,11 @@ img {
         text-align: left;
     }
 }
+@media screen and (max-width: 500px) {
+    .content {
+        margin: 5rem auto !important;
+    }
+}
 
 @media screen and (max-width: 540px) {
     .topnav a {
@@ -198,7 +203,7 @@ main {
 }
 
 .content {
-    margin: 25% auto;
+    margin: 5% auto;
     width: 100%;
     max-width: 500px;
     animation-name: modalopen;

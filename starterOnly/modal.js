@@ -66,11 +66,21 @@ form.addEventListener("submit", function (e) {
 
 // Validations des champs
 function validateFirst(firstname) {
-    if (firstname.value == "" || firstname.value.length < 2) {
+    if (firstname.value == "") {
+        formDataFirst.setAttribute(
+            "data-error",
+            "Veuillez entrer votre prénom"
+        );
+
+        formDataFirst.setAttribute("data-error-visible", "true");
+
+        return false;
+    } else if (firstname.value.length < 2) {
         formDataFirst.setAttribute(
             "data-error",
             "Veuillez entrer 2 caractères ou plus"
         );
+
         formDataFirst.setAttribute("data-error-visible", "true");
 
         return false;
@@ -100,7 +110,7 @@ function validateEmail(mail) {
     if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,3}$/.test(mail.value)) {
         formDataMail.setAttribute(
             "data-error",
-            "Veuillez entrer une adresse mail valide"
+            "Veuillez entrer une adresse email valide"
         );
         formDataMail.setAttribute("data-error-visible", "true");
         return false;

@@ -214,10 +214,13 @@ function validate() {
     isFormValidate.push(validateOptions(locations));
     isFormValidate.push(validateConditions(generalConditions));
 
-    if (!isFormValidate.includes(false)) {
-        form.style.display = "none";
-        confirmationValidation.style.display = "flex";
+    if (isFormValidate.includes(false)) {
+        return false;
     }
+
+    form.style.display = "none";
+    confirmationValidation.style.display = "flex";
+    form.reset();
 
     // fermer le message de validation
     document.querySelector("#btn-closed").addEventListener("click", closeModal);
